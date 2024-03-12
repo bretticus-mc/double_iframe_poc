@@ -12,8 +12,8 @@ app.use(express.static('public'));
 app.use(express.json());
 
 HTTPS.createServer({
-    key: FS.readFileSync("connect.com+13-key.pem"),
-    cert: FS.readFileSync("connect.com+13.pem")
+    key: FS.readFileSync("connect-workspace.com+1-key.pem"),
+    cert: FS.readFileSync("connect-workspace.com+1.pem")
 }, app).listen(443, () => {
     console.log("Listening https at :443...");
 });
