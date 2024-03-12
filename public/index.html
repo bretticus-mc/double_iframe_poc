@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sample Site</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            padding: 50px;
+        }
+    </style>
+    <script>
+        //const sw = new SharedWorker("shared_worker.js");
+
+    </script>
+</head>
+
+<body>
+    <h3>Main Window</h3>
+    <h3 id="url">Text</h3>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="jumbotron p-2" style="border:none; height:425px; width:100%">
+                    <iframe src="https://connect.com/ccp.html" style="border:none; height:400px; width:100%"></iframe>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="jumbotron p-2" style="border:none; height:630px; width:100%">
+                    <iframe src="https://customer.com/custom_ccp.html"
+                        style="border:none; height:600px; width:100%"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div class="container">
+        <div class="jumbotron" style="border:none; height:500px; width:600px">
+            <iframe src="https://connect.com/ccp.html" style="border:none; height:400px; width:500px"></iframe>
+        </div>
+    </div>
+    <div class="container">
+        <div class="jumbotron">
+            <iframe src="https://customer.com/custom_ccp.html" style="border:none; height:400px; width:500px"></iframe>
+        </div>
+    </div> -->
+    <script src="utils.js"></script>
+</body>
+
+</html>
