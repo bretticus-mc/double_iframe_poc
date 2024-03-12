@@ -13,12 +13,6 @@
     </style>
     <script>
         const sw = new SharedWorker("shared_worker.js");
-        // function setCookie() {
-        //     fetch("/setcookie");
-        //     fetch("/sethttpcookie");
-        //     fetch("/setpartitioncookie");
-        //     fetch("/setpartitionedhttpcookie");
-        // }
     </script>
 </head>
 
@@ -28,6 +22,7 @@
     <div>
         <div>
             <button class="btn btn-primary m-1" onclick="setCookie()">Set Cookies</button>
+            <button class="btn btn-primary m-1" onclick="postCookies()">POST cookies</button>
         </div>
     </div>
     <script src="utils.js"></script>

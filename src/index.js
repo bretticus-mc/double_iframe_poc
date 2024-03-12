@@ -1,5 +1,6 @@
 const express = require('express');
 const cookie = require('cookie');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const HTTPS = require("https");
 const FS = require("fs");
@@ -10,6 +11,7 @@ app.use(cors());
 
 app.use(express.static('public'));
 app.use(express.json());
+app.use(cookieParser());
 
 HTTPS.createServer({
     key: FS.readFileSync("connect-workspace.com+1-key.pem"),
@@ -24,7 +26,8 @@ app.get('/ping', (req, res) => {
 });
 
 // Partitioned Cookie with HTTP Only attribute
-app.get('/setcookie', (req, res) => {
+app.get('/setunpartitionedcookie', (req, res) => {
+    console.log("/setunpartitionedcookie called");
     res.setHeader('Set-Cookie', cookie.serialize('unpartitioned-no-http-cookie', 'auth_info_here', {
         httpOnly: false,
         sameSite: 'none',
@@ -35,19 +38,20 @@ app.get('/setcookie', (req, res) => {
 });
 
 // Unpartitioned Cookie without httpOnly
-app.get('/sethttpcookie', (req, res) => {
+app.get('/setunpartitionedhttpcookie', (req, res) => {
+    console.log("/setunpartitionedhttpcookie called");
     res.setHeader('Set-Cookie', cookie.serialize('unpartitioned-http-cookie', 'auth_info_here', {
         httpOnly: true,
         sameSite: 'none',
         secure: true,
         partitioned: false,
     }));
-    console.log("/setunpartitionedcookie");
     res.send('Cookie have been saved successfully');
 });
 
 // Partitioned Cookie without HTTP Only attribute
 app.get('/setpartitioncookie', (req, res) => {
+    console.log("/setpartitioncookie called");
     res.setHeader('Set-Cookie', cookie.serialize('partitioned-no-http-cookie', 'auth_info_here', {
         httpOnly: false,
         sameSite: 'none',
@@ -57,13 +61,16 @@ app.get('/setpartitioncookie', (req, res) => {
     res.send('Cookie have been saved successfully');
 });
 
-app.get('/setpartitionedhttpcookie', cors({ origin: 'https://customer.com' }), (req, res) => {
+app.get('/setpartitionedhttpcookie', (req, res) => {
+    console.log("/setpartitionedhttpcookie called");
+
     res.setHeader('Set-Cookie', cookie.serialize('partitioned-cookie', 'auth_info_here', {
         httpOnly: true,
         sameSite: 'none',
         secure: true,
         partitioned: true,
     }));
+
     res.send('Cookie have been saved successfully');
 });
 
@@ -76,13 +83,16 @@ app.get('/logout', (req, res) => {
     res.send('Cookie have been saved successfully');
 });
 
-app.get("/auth", cors({ origin: 'https://customer-site1.com' }), (req, res) => {
-    console.log(req.rawHeaders);
-    if (req.cookie) {
-        console.log(req.cookie);
-        res.sendStatus(200)
+app.post("/auth", (req, res) => {
+    console.log("/auth called");
+    const cookies = req.cookies;
+
+    if (cookies && Object.keys(cookies).length) {
+        res.json({ message: 'Cookies received', cookies });
+    } else {
+        res.sendStatus(400);
     }
-    res.sendStatus(400);
+    ;
 
 })
 
